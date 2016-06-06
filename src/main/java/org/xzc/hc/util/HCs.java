@@ -15,7 +15,7 @@ import org.xzc.hc.HC;
 import org.xzc.hc.util.ProxyUtil.ProxyInfo;
 
 public class HCs {
-	public static interface HttpClientBuilderCallback {
+	public interface HttpClientBuilderCallback {
 		void onBuild(HttpClientBuilder hcb);
 	}
 
@@ -31,10 +31,6 @@ public class HCs {
 
 	public static HC makeHC(int batch) {
 		return makeHC( batch, DEFAULT_TIMEOUT, null, true, null, null );
-	}
-
-	public static HC makeHC(boolean ignoreCookie) {
-		return makeHC( ignoreCookie, null );
 	}
 
 	public static HC makeHC(boolean ignoreCookie, BasicCookieStore bcs) {

@@ -1,37 +1,40 @@
 package org.xzc.hc;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
+import com.alibaba.fastjson.JSONObject;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.xzc.hc.util.ParamsUtils;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Params {
+	private List<NameValuePair> params = new ArrayList<NameValuePair>();
 
 	public Params() {
 	}
 
 	public Params(String name, Object value) {
-		add( name, value );
+		add(name, value);
 	}
 
 	public Params(Object... args) {
 		if (args.length % 2 != 0)
-			throw new IllegalArgumentException( "参数个数必须是偶数!" );
+			throw new IllegalArgumentException("参数个数必须是偶数!");
 		for (int i = 0; i < args.length; i += 2) {
 			String name = args[i].toString();
 			String value = args[i + 1].toString();
-			add( name, value );
+			add(name, value);
 		}
 	}
 
-	private List<NameValuePair> params = new ArrayList<NameValuePair>();
 
 	public Params add(String name, Object value) {
-		params.add( new BasicNameValuePair( name, value.toString() ) );
+		params.add(new BasicNameValuePair(name, value.toString()));
 		return this;
 	}
 
@@ -47,34 +50,40 @@ public class Params {
 	}
 
 	public UrlEncodedFormEntity toEntity() {
-		UrlEncodedFormEntity e = null;
 		try {
-			e = new UrlEncodedFormEntity( params, encoding );
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
+			return new UrlEncodedFormEntity(params, encoding);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
 		}
-		return e;
 	}
 
 	public Params paramsTo(RequestBuilder rb) {
 		for (NameValuePair nvp : params)
-			rb.addParameter( nvp );
+			rb.addParameter(nvp);
 		return this;
 	}
 
 	public Params datasTo(RequestBuilder rb) {
-		rb.setEntity( toEntity() );
+		rb.setEntity(toEntity());
 		return this;
 	}
 
 	public Params headersTo(RequestBuilder rb) {
 		for (NameValuePair nvp : params) {
-			rb.addHeader( nvp.getName(), nvp.getValue() );
+			rb.addHeader(nvp.getName(), nvp.getValue());
 		}
 		return this;
 	}
 
 	public List<NameValuePair> getParamList() {
 		return params;
+	}
+
+	public void jsonTo(RequestBuilder rb) {
+		JSONObject jo = new JSONObject();
+		for (NameValuePair nvp : params) {
+			jo.put(nvp.getName(), nvp.getValue());
+		}
+		ParamsUtils.jsonTo(rb, jo);
 	}
 }

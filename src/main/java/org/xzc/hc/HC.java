@@ -9,8 +9,8 @@ import org.apache.http.util.EntityUtils;
 
 /**
  * 对hc的简单的封装
- * @author xzchaoo
  *
+ * @author xzchaoo
  */
 public class HC {
 	private static final <T> T safeRun(SafeRunner<T> sr) {
@@ -19,111 +19,97 @@ public class HC {
 		} catch (Exception e) {
 			if (e instanceof RuntimeException)
 				throw (RuntimeException) e;
-			throw new RuntimeException( e );
+			throw new RuntimeException(e);
 		}
 	}
 
 	private CloseableHttpClient chc;
-
-	private String encoding = "utf-8";
+	private String defaultEncoding = "utf-8";
 
 	public HC(CloseableHttpClient chc) {
 		this.chc = chc;
 	}
 
 	public byte[] asByteArray(final HttpUriRequest req) {
-		return safeRun( new SafeRunner<byte[]>() {
+		return safeRun(new SafeRunner<byte[]>() {
 			public byte[] run() throws Exception {
 				CloseableHttpResponse res = null;
 				try {
-					res = chc.execute( req );
-					return EntityUtils.toByteArray( res.getEntity() );
+					res = chc.execute(req);
+					return EntityUtils.toByteArray(res.getEntity());
 				} finally {
-					HttpClientUtils.closeQuietly( res );
+					HttpClientUtils.closeQuietly(res);
 				}
 			}
-		} );
+		});
 	}
 
-	public byte[] asByteArray(Req req) {
-		return asByteArray( req.build() );
-	}
-
-	public CloseableHttpResponse asRes(final HttpUriRequest req) {
-		return safeRun( new SafeRunner<CloseableHttpResponse>() {
-			public CloseableHttpResponse run() throws Exception {
-				return chc.execute( req );
+	public Resp asResp(final HttpUriRequest req) {
+		return safeRun(new SafeRunner<Resp>() {
+			public Resp run() throws Exception {
+				return new Resp(HC.this, chc.execute(req));
 			}
-		} );
-	}
-
-	public CloseableHttpResponse asRes(Req req) {
-		return asRes( req.build() );
+		});
 	}
 
 	public String asString(HttpUriRequest req) {
-		return asString( req, encoding );
+		return asString(req, defaultEncoding);
 	}
 
 	public String asString(final HttpUriRequest req, final String encoding) {
-		return safeRun( new SafeRunner<String>() {
+		return safeRun(new SafeRunner<String>() {
 			public String run() throws Exception {
 				CloseableHttpResponse res = null;
 				try {
-					res = chc.execute( req );
-					return EntityUtils.toString( res.getEntity(), encoding );
+					res = chc.execute(req);
+					return EntityUtils.toString(res.getEntity(), encoding);
 				} finally {
-					HttpClientUtils.closeQuietly( res );
+					HttpClientUtils.closeQuietly(res);
 				}
 			}
-		} );
+		});
 	}
 
-	public String asString(Req req) {
-		return asString( req.build(), encoding );
-	}
-
-	public String asString(Req req, String encoding) {
-		return asString( req.build(), encoding );
-	}
-
+	/**
+	 * 关闭
+	 */
 	public void close() {
-		HttpClientUtils.closeQuietly( chc );
+		HttpClientUtils.closeQuietly(chc);
 	}
 
+	/**
+	 * 消耗掉这个请求, 不需要返回值
+	 *
+	 * @param req
+	 */
 	public void consume(final HttpUriRequest req) {
-		safeRun( new SafeRunner<Void>() {
+		safeRun(new SafeRunner<Void>() {
 			public Void run() throws Exception {
 				CloseableHttpResponse res = null;
 				try {
-					res = chc.execute( req );
-					EntityUtils.consumeQuietly( res.getEntity() );
+					res = chc.execute(req);
+					EntityUtils.consumeQuietly(res.getEntity());
 				} finally {
-					HttpClientUtils.closeQuietly( res );
+					HttpClientUtils.closeQuietly(res);
 				}
 				return null;
 			}
-		} );
-	}
-
-	public void consume(Req req) {
-		consume( req.build() );
-	}
-
-	public byte[] getAsByteArray(String url) {
-		return asByteArray( RequestBuilder.get( url ).build() );
-	}
-
-	public String getAsString(String url) {
-		return getAsString( url, encoding );
-	}
-
-	public String getAsString(String url, String encoding) {
-		return asString( RequestBuilder.get( url ).build(), encoding );
+		});
 	}
 
 	public CloseableHttpClient getCHC() {
 		return chc;
 	}
 
+	public Req get(String url) {
+		return new Req(this, RequestBuilder.get(url));
+	}
+
+	public Req post(String url) {
+		return new Req(this, RequestBuilder.post(url));
+	}
+
+	public String getDefaultEncoding() {
+		return defaultEncoding;
+	}
 }

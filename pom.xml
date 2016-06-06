@@ -1,19 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.xzc</groupId>
 	<artifactId>hc</artifactId>
-	<version>0.0.2</version>
+	<!--
+	<version>0.0.3-SNAPSHOT</version>
+	-->
+	<version>0.0.3</version>
 	<packaging>jar</packaging>
 
 	<description>
+		0.0.3 重构了HC
 		0.0.2 增加 HCs 和 ProxyUtil
 		0.0.1 对httpcomponents的一个简单的封装.
 	</description>
-	
-	
+
+
 	<developers>
 		<developer>
 			<name>xzchaoo</name>
@@ -23,21 +27,43 @@
 
 	<properties>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+		<fastjson.version>1.2.7</fastjson.version>
+		<juni4.version>4.12</juni4.version>
+		<lang3.version>3.4</lang3.version>
+		<httpclient.version>4.5.1</httpclient.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${juni4.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
+			<version>${lang3.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.1</version>
-			<!-- <optional>true</optional> -->
+			<version>${httpclient.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -49,9 +75,11 @@
 				<executions>
 					<execution>
 						<id>attach-sources</id>
-						<phase>verify</phase><!--  要绑定到的生命周期的阶段 在verify之后，install之前执行下面指定的goal -->
+						<phase>verify</phase>
+						<!--  要绑定到的生命周期的阶段 在verify之后，install之前执行下面指定的goal -->
 						<goals>
-							<goal>jar-no-fork</goal><!-- 类似执行mvn source:jar -->
+							<goal>jar-no-fork</goal>
+							<!-- 类似执行mvn source:jar -->
 						</goals>
 					</execution>
 				</executions>
