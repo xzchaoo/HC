@@ -56,7 +56,7 @@ public class Req implements Cloneable {
 		return this;
 	}
 
-	public Req data(Object... dataPairList) {
+	public Req datas(Object... dataPairList) {
 		if (dataPairList != null) {
 			if (this.dataPairList == null)
 				this.dataPairList = new ArrayList<Object>(dataPairList.length);

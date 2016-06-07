@@ -17,7 +17,7 @@ public class TestHC {
 		HC hc = HCs.makeHC();
 		String s = hc.post("http://api.bilibili.com/x/reply/add")
 			.cookies()
-			.data("oid", 4569, "message", "asdf", "type", 1, "plat", 3)
+			.datas("oid", 4569, "message", "asdf", "type", 1, "plat", 3)
 			.asString();
 		System.out.println(s);
 		hc.close();
