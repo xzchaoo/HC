@@ -69,6 +69,10 @@ public class Req implements Cloneable {
 		return hc.asString(build());
 	}
 
+	public <T> T asPojo(Class<T> clazz) {
+		return JSON.parseObject(asString(), clazz);
+	}
+
 	public String asString(String encoding) {
 		return hc.asString(build(), encoding);
 	}
@@ -81,7 +85,7 @@ public class Req implements Cloneable {
 		return hc.asByteArray(build());
 	}
 
-	public Resp asRes() {
+	public Resp asResp() {
 		return hc.asResp(build());
 	}
 

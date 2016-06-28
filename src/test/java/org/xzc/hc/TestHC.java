@@ -14,12 +14,11 @@ public class TestHC {
 
 	@Test
 	public void testJSON() {
-		HC hc = HCs.makeHC();
+	/*	HC hc = HCs.makeHC();
 		String s = hc.post("http://api.bilibili.com/x/reply/add")
-			.cookies()
 			.datas("oid", 4569, "message", "asdf", "type", 1, "plat", 3)
 			.asString();
 		System.out.println(s);
-		hc.close();
+		hc.close();*/
 	}
 }

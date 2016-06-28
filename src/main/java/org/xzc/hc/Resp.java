@@ -16,6 +16,7 @@ import java.io.IOException;
 public class Resp {
 	private final CloseableHttpResponse resp;
 	private final HC hc;
+	private String stringCache;
 
 	public Resp(HC hc, CloseableHttpResponse resp) {
 		this.hc = hc;
@@ -26,8 +27,20 @@ public class Resp {
 		return JSON.parseObject(asString(hc.getDefaultEncoding()));
 	}
 
+	public <T> T asPojo(Class<T> clazz) {
+		return JSON.parseObject(asString(), clazz);
+	}
+
 	public String asString() {
 		return asString(hc.getDefaultEncoding());
+	}
+
+	public CloseableHttpResponse raw() {
+		return resp;
+	}
+
+	public void close() {
+		HttpClientUtils.closeQuietly(resp);
 	}
 
 	public void consume() {
@@ -51,8 +64,9 @@ public class Resp {
 	}
 
 	public String asString(String encoding) {
+		if (stringCache != null) return stringCache;
 		try {
-			return EntityUtils.toString(resp.getEntity(), encoding);
+			return (stringCache = EntityUtils.toString(resp.getEntity(), encoding));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} finally {
