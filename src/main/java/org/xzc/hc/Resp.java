@@ -81,7 +81,8 @@ public class Resp {
 	}
 
 	public static String toCookieString(Header h) {
-		return h.getName() + "=" + h.getValue() + ";";
+		String v = h.getValue();
+		return v.substring(0, v.indexOf(';') + 1);
 	}
 
 	public String getCookie(String name) {
