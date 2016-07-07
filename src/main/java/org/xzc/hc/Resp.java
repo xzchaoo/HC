@@ -3,6 +3,7 @@ package org.xzc.hc;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -72,5 +73,38 @@ public class Resp {
 		} finally {
 			HttpClientUtils.closeQuietly(resp);
 		}
+	}
+
+	public String getFirstHeader(String name) {
+		Header h = resp.getFirstHeader(name);
+		return h == null ? null : h.getValue();
+	}
+
+	public static String toCookieString(Header h) {
+		return h.getName() + "=" + h.getValue() + ";";
+	}
+
+	public String getCookie(String name) {
+		Header[] hs = resp.getHeaders("Set-Cookie");
+		StringBuilder sb = new StringBuilder();
+		for (Header h : hs) {
+			if (h.getName().equals(name)) {
+				sb.append(toCookieString(h));
+			}
+		}
+		return sb.toString();
+	}
+
+	public String getCookieString() {
+		Header[] hs = resp.getHeaders("Set-Cookie");
+		StringBuilder sb = new StringBuilder();
+		for (Header h : hs) {
+			sb.append(toCookieString(h));
+		}
+		return sb.toString();
+	}
+
+	public int getStatusCode() {
+		return resp.getStatusLine().getStatusCode();
 	}
 }
