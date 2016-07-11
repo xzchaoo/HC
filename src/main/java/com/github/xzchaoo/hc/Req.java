@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.xzchaoo.hc.util.Assert;
 import com.github.xzchaoo.hc.util.ParamsUtils;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
@@ -65,11 +66,13 @@ public class Req implements Cloneable {
 		}
 		return this;
 	}
-	public Req datas(Params datas){
+
+	public Req datas(Params datas) {
 		datas.datasTo(rb);
 		return this;
 	}
-	public Req params(Params params){
+
+	public Req params(Params params) {
 		params.paramsTo(rb);
 		return this;
 	}
@@ -96,6 +99,11 @@ public class Req implements Cloneable {
 
 	public Resp asResp() {
 		return hc.asResp(build());
+	}
+
+	public Req entity(HttpEntity entity) {
+		rb.setEntity(entity);
+		return this;
 	}
 
 	//以json的格式请求

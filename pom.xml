@@ -23,9 +23,8 @@
 	<properties>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<fastjson.version>1.2.7</fastjson.version>
-		<juni4.version>4.12</juni4.version>
 		<lang3.version>3.4</lang3.version>
-		<httpclient.version>4.5.1</httpclient.version>
+		<httpclient.version>4.5.2</httpclient.version>
 	</properties>
 
 	<dependencies>
@@ -33,20 +32,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${juni4.version}</version>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -60,6 +45,13 @@
 			<artifactId>httpclient</artifactId>
 			<version>${httpclient.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>${httpclient.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -91,7 +83,6 @@
 		</plugins>
 	</build>
 
-
 	<distributionManagement>
 		<repository>
 			<id>myrepo</id>
@@ -102,7 +93,6 @@
 			<url>http://222.35.17.177:8081/nexus/content/repositories/myrepo-snapshot/</url>
 		</snapshotRepository>
 	</distributionManagement>
-
 
 
 </project>
