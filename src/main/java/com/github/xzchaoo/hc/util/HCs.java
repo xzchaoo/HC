@@ -1,4 +1,6 @@
-package org.xzc.hc.util;
+package com.github.xzchaoo.hc.util;
+
+import com.github.xzchaoo.hc.HC;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -11,8 +13,6 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.xzc.hc.HC;
-import org.xzc.hc.util.ProxyUtil.ProxyInfo;
 
 public class HCs {
 	public interface HttpClientBuilderCallback {
@@ -59,7 +59,7 @@ public class HCs {
 		BasicCredentialsProvider bcp = new BasicCredentialsProvider();
 		HttpHost proxy = null;
 		if (httpProxy != null) {
-			ProxyInfo pi = ProxyUtil.parse( httpProxy );
+			ProxyUtil.ProxyInfo pi = ProxyUtil.parse( httpProxy );
 			proxy = new HttpHost( pi.host, pi.port );
 			if (pi.username != null) {
 				bcp.setCredentials( new AuthScope( pi.host, pi.port ),

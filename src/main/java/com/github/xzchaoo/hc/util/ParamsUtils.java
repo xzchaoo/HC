@@ -1,4 +1,4 @@
-package org.xzc.hc.util;
+package com.github.xzchaoo.hc.util;
 
 import com.alibaba.fastjson.JSONObject;
 

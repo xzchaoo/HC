@@ -1,11 +1,6 @@
-package org.xzc.hc;
+package com.github.xzchaoo.hc;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.entity.EntityBuilder;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.entity.ContentType;
 import org.junit.Test;
-import org.xzc.hc.util.HCs;
 
 /**
  * Created by xzchaoo on 2016/6/6 0006.
