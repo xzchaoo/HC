@@ -1,4 +1,4 @@
-package org.xzc.hc.util;
+package com.github.xzchaoo.hc.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

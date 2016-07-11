@@ -1,4 +1,4 @@
-package org.xzc.hc.util;
+package com.github.xzchaoo.hc.util;
 
 /**
  * Created by xzchaoo on 2016/6/6 0006.

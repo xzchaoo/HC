@@ -1,4 +1,4 @@
-package org.xzc.hc;
+package com.github.xzchaoo.hc;
 
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;

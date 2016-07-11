@@ -1,4 +1,4 @@
-package org.xzc.hc;
+package com.github.xzchaoo.hc;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -6,7 +6,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.xzc.hc.util.ParamsUtils;
+import com.github.xzchaoo.hc.util.ParamsUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;

@@ -1,10 +1,5 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.methods.HttpPost;
-import org.xzc.hc.util.ProxyUtil;
-import org.xzc.hc.util.ProxyUtil.ProxyInfo;
+import com.github.xzchaoo.hc.util.ProxyUtil;
+import com.github.xzchaoo.hc.util.ProxyUtil.ProxyInfo;
 
 public class Main {
 	public static void main(String[] args) {
