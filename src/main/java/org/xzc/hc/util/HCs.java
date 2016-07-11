@@ -17,6 +17,8 @@ import org.xzc.hc.util.ProxyUtil.ProxyInfo;
 public class HCs {
 	public interface HttpClientBuilderCallback {
 		void onBuild(HttpClientBuilder hcb);
+
+		void onBuild(Builder b);
 	}
 
 	//默认超时30秒
@@ -48,6 +50,10 @@ public class HCs {
 		if (ignoreCookie) {
 			b.setCookieSpec( CookieSpecs.IGNORE_COOKIES );
 		}
+
+		if(hcbc!=null)
+			hcbc.onBuild(b);
+
 		RequestConfig rc = b.build();
 
 		//构建ConnectionManager

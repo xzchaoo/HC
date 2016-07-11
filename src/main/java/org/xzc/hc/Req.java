@@ -3,6 +3,7 @@ package org.xzc.hc;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.xzc.hc.util.Assert;
@@ -64,6 +65,14 @@ public class Req implements Cloneable {
 		}
 		return this;
 	}
+	public Req datas(Params datas){
+		datas.datasTo(rb);
+		return this;
+	}
+	public Req params(Params params){
+		params.paramsTo(rb);
+		return this;
+	}
 
 	public String asString() {
 		return hc.asString(build());
@@ -92,6 +101,11 @@ public class Req implements Cloneable {
 	//以json的格式请求
 	public Req json() {
 		this.json = true;
+		return this;
+	}
+
+	public Req config(RequestConfig rc) {
+		rb.setConfig(rc);
 		return this;
 	}
 

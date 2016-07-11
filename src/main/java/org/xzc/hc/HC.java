@@ -1,6 +1,8 @@
 package org.xzc.hc;
 
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.Configurable;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.HttpClientUtils;
@@ -28,6 +30,10 @@ public class HC {
 
 	public HC(CloseableHttpClient chc) {
 		this.chc = chc;
+	}
+
+	public RequestConfig getRequestConfig() {
+		return chc instanceof Configurable ? ((Configurable) chc).getConfig() : null;
 	}
 
 	public byte[] asByteArray(final HttpUriRequest req) {
