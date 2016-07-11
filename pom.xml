@@ -93,15 +93,16 @@
 
 
 	<distributionManagement>
-		<snapshotRepository>
-			<id>bj</id>
-			<url>http://222.35.17.177:8081/nexus/content/repositories/snapshots/</url>
-		</snapshotRepository>
 		<repository>
-			<id>bj</id>
-			<url>http://222.35.17.177:8081/nexus/content/repositories/releases/</url>
+			<id>myrepo</id>
+			<url>http://222.35.17.177:8081/nexus/content/repositories/myrepo/</url>
 		</repository>
+		<snapshotRepository>
+			<id>myrepo-snapshot</id>
+			<url>http://222.35.17.177:8081/nexus/content/repositories/myrepo-snapshot/</url>
+		</snapshotRepository>
 	</distributionManagement>
+
 
 
 </project>
