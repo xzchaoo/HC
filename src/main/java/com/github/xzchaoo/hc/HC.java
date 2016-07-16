@@ -9,6 +9,8 @@ import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import java.io.IOException;
+
 /**
  * 对hc的简单的封装
  *
@@ -60,6 +62,10 @@ public class HC {
 
 	public String asString(HttpUriRequest req) {
 		return asString(req, defaultEncoding);
+	}
+
+	public CloseableHttpResponse execute(HttpUriRequest hur) throws IOException {
+		return chc.execute(hur);
 	}
 
 	public String asString(final HttpUriRequest req, final String encoding) {
