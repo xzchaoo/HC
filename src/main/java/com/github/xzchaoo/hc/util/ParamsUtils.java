@@ -1,7 +1,9 @@
 package com.github.xzchaoo.hc.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.EntityBuilder;
@@ -14,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xzchaoo on 2016/6/6 0006.
@@ -126,6 +129,16 @@ public class ParamsUtils {
 		return list;
 	}
 
+	public static List<NameValuePair> toNameValuePairList(Map<?, ?> map) {
+		List<NameValuePair> list = new ArrayList<NameValuePair>();
+		for (Map.Entry<?, ?> e : map.entrySet()) {
+			if (e.getValue() != null) {
+				list.add(new BasicNameValuePair(e.getKey().toString(), e.getValue().toString()));
+			}
+		}
+		return list;
+	}
+
 	public static List<NameValuePair> toNameValuePairList(Object[] pairArray) {
 		if (pairArray == null || pairArray.length == 0) return Collections.emptyList();
 		Assert.assertTrue(pairArray.length % 2 == 0, "pairList大小必须为偶数..");
@@ -138,7 +151,7 @@ public class ParamsUtils {
 		return list;
 	}
 
-	public static void formTo(RequestBuilder rb, List<Object> dataPairList) {
+	public static void datasTo(RequestBuilder rb, List<Object> dataPairList) {
 		try {
 			List<NameValuePair> list = toNameValuePairList(dataPairList);
 			UrlEncodedFormEntity e = new UrlEncodedFormEntity(list, "utf-8");
@@ -146,5 +159,52 @@ public class ParamsUtils {
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * 默认是会跳过value==null的参数的
+	 *
+	 * @param map
+	 * @param rb
+	 */
+	public static void paramsTo(RequestBuilder rb, Map<?, ?> map) {
+		for (Map.Entry<?, ?> e : map.entrySet()) {
+			if (e.getValue() != null) {
+				rb.addParameter(e.getKey().toString(), e.getValue().toString());
+			}
+		}
+	}
+
+	public static Map<String, String> describe(Object bean) {
+		try {
+			return BeanUtils.describe(bean);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static void paramsTo(RequestBuilder rb, Object obj) {
+		paramsTo(rb, describe(obj));
+	}
+
+	public static void datasTo(RequestBuilder rb, Map<?, ?> map) {
+		List<NameValuePair> list = toNameValuePairList(map);
+		UrlEncodedFormEntity e = null;
+		try {
+			e = new UrlEncodedFormEntity(list, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		rb.setEntity(e);
+	}
+
+	/**
+	 * 目前只支持 JSONObject 注意不要传入数组
+	 *
+	 * @param rb
+	 * @param obj
+	 */
+	public static void jsonTo(RequestBuilder rb, Object obj) {
+		jsonTo(rb, (JSONObject) JSON.toJSON(obj));
 	}
 }

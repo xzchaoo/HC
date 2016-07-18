@@ -10,6 +10,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Params {
@@ -65,6 +66,17 @@ public class Params {
 
 	public Params datasTo(RequestBuilder rb) {
 		rb.setEntity(toEntity());
+		return this;
+	}
+
+	public Params set(String name, Object value) {
+		Iterator<NameValuePair> iter = params.iterator();
+		while (iter.hasNext()) {
+			NameValuePair nvp = iter.next();
+			if (nvp.getName().equals(name))
+				iter.remove();
+		}
+		params.add(new BasicNameValuePair(name, value.toString()));
 		return this;
 	}
 

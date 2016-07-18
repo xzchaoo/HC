@@ -9,14 +9,9 @@
 	<packaging>jar</packaging>
 
 	<description>
-		0.0.4 丰富Resp
-		0.0.3 重构了HC
-		0.0.2 增加 HCs 和 ProxyUtil
-		0.0.1 对httpcomponents的一个简单的封装.
+		修改版本为1.0.0-SNAPSHOT
 	</description>
 
-	<name>${project.groupId}:${project.artifactId}</name>
-	<url>https://github.com/xzchaoo/HC</url>
 
 	<developers>
 		<developer>
@@ -28,9 +23,11 @@
 	<properties>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<fastjson.version>1.2.7</fastjson.version>
-		<juni4.version>4.12</juni4.version>
 		<lang3.version>3.4</lang3.version>
-		<httpclient.version>4.5.1</httpclient.version>
+		<httpclient.version>4.5.2</httpclient.version>
+		<slf4j.api.version>1.7.21</slf4j.api.version>
+		<commons4.version>4.1</commons4.version>
+		<junit.version>4.12</junit.version>
 	</properties>
 
 	<dependencies>
@@ -38,20 +35,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${juni4.version}</version>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -65,8 +48,40 @@
 			<artifactId>httpclient</artifactId>
 			<version>${httpclient.version}</version>
 		</dependency>
-	</dependencies>
 
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>${httpclient.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.xzchaoo</groupId>
+			<artifactId>utils</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.api.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${commons4.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -94,18 +109,17 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 
 	<distributionManagement>
 		<repository>
-			<id>myrepo</id>
-			<url>http://222.35.17.177:8081/nexus/content/repositories/myrepo/</url>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</repository>
 		<snapshotRepository>
-			<id>myrepo-snapshot</id>
-			<url>http://222.35.17.177:8081/nexus/content/repositories/myrepo-snapshot/</url>
+			<id>sonatype-releases</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
