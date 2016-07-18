@@ -8,10 +8,8 @@ import org.apache.http.client.utils.URIBuilder;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
-import static com.sun.xml.internal.ws.policy.sourcemodel.wspolicy.XmlToken.Uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
