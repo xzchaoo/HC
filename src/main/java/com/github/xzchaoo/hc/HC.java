@@ -1,5 +1,9 @@
 package com.github.xzchaoo.hc;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.github.xzchaoo.hc.util.Assert;
+
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.Configurable;
@@ -9,6 +13,7 @@ import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 /**
@@ -16,8 +21,8 @@ import java.io.IOException;
  *
  * @author xzchaoo
  */
-public class HC {
-	private static final <T> T safeRun(SafeRunner<T> sr) {
+public class HC implements Closeable {
+	protected static <T> T safeRun(SafeRunner<T> sr) {
 		try {
 			return sr.run();
 		} catch (Exception e) {
@@ -27,10 +32,12 @@ public class HC {
 		}
 	}
 
-	private CloseableHttpClient chc;
-	private String defaultEncoding = "utf-8";
+	private static final String DEFAULT_ENCODING = "utf-8";
+	private final CloseableHttpClient chc;
+	private String defaultEncoding = DEFAULT_ENCODING;
 
 	public HC(CloseableHttpClient chc) {
+		Assert.notNull(chc, "CloseableHttpClient can not be null");
 		this.chc = chc;
 	}
 
@@ -66,6 +73,14 @@ public class HC {
 
 	public CloseableHttpResponse execute(HttpUriRequest hur) throws IOException {
 		return chc.execute(hur);
+	}
+
+	public JSONObject asJSON(HttpUriRequest hur) {
+		return asJSON(hur, defaultEncoding);
+	}
+
+	public JSONObject asJSON(HttpUriRequest hur, String encoding) {
+		return JSON.parseObject(asString(hur, encoding));
 	}
 
 	public String asString(final HttpUriRequest req, final String encoding) {
@@ -114,14 +129,19 @@ public class HC {
 	}
 
 	public Req get(String url) {
-		return new Req(this, RequestBuilder.get(url));
+		return new Req(this, RequestBuilder.get(url), defaultEncoding);
 	}
 
 	public Req post(String url) {
-		return new Req(this, RequestBuilder.post(url));
+		return new Req(this, RequestBuilder.post(url), defaultEncoding);
 	}
 
 	public String getDefaultEncoding() {
 		return defaultEncoding;
+	}
+
+	public void setDefaultEncoding(String encoding) {
+		Assert.notNull(encoding, "encoding can not be null");
+		this.defaultEncoding = encoding;
 	}
 }

@@ -9,7 +9,7 @@ public class Assert {
 	}
 
 	public static void notEmpty(String str, String text) {
-		if (str == null || str.trim().isEmpty()) throw new IllegalArgumentException(text);
+		if (str == null || str.trim().length() > 0) throw new IllegalArgumentException(text);
 	}
 
 	public static void assertTrue(boolean result, String text) {
