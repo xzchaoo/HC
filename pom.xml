@@ -113,14 +113,14 @@
 	</build>
 
 	<distributionManagement>
-		<repository>
+		<snapshotRepository>
 			<id>sonatype-snapshots</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</repository>
-		<snapshotRepository>
+		</snapshotRepository>
+		<repository>
 			<id>sonatype-releases</id>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</snapshotRepository>
+		</repository>
 	</distributionManagement>
 
 
