@@ -28,6 +28,7 @@
 		<slf4j.api.version>1.7.21</slf4j.api.version>
 		<commons4.version>4.1</commons4.version>
 		<junit.version>4.12</junit.version>
+		<commons.logging.version>1.2</commons.logging.version>
 	</properties>
 
 	<dependencies>
@@ -41,6 +42,12 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${lang3.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>${commons.logging.version}</version>
 		</dependency>
 
 		<dependency>

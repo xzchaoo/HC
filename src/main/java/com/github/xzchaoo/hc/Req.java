@@ -81,50 +81,58 @@ public class Req implements Cloneable {
 		return datas;
 	}
 
-	private Req putAll(Map<?, ?> map, MultiValuedMap<String, String> mmv) {
-		for (Map.Entry<?, ?> e : map.entrySet()) {
-			if (e.getValue() != null) {
-				mmv.put(e.getKey().toString(), e.getValue().toString());
+	private Req putAll(Params params, MultiValuedMap<String, String> mvm) {
+		if (params != null) {
+			for (NameValuePair nvp : params.getParamList()) {
+				mvm.put(nvp.getName(), nvp.getValue());
 			}
 		}
 		return this;
 	}
 
-	private Req putAll(Object[] list, MultiValuedMap<String, String> mmv) {
+	private Req putAll(Map<?, ?> map, MultiValuedMap<String, String> mvm) {
+		for (Map.Entry<?, ?> e : map.entrySet()) {
+			if (e.getValue() != null) {
+				mvm.put(e.getKey().toString(), e.getValue().toString());
+			}
+		}
+		return this;
+	}
+
+	private Req putAll(Object[] list, MultiValuedMap<String, String> mvm) {
 		for (int i = 0; i < list.length; i += 2) {
-			mmv.put(list[i].toString(), list[i + 1].toString());
+			mvm.put(list[i].toString(), list[i + 1].toString());
 		}
 		return this;
 	}
 
 	public Req headers(Object... headers) {
-		if (headers != null) {
-			ensureHeaders();
-			putAll(headers, this.headers);
-		}
-		return this;
+		return headers == null ? this : putAll(headers, ensureHeaders());
+	}
+
+	public Req headers(Params params) {
+		return params == null ? this : putAll(params, ensureHeaders());
 	}
 
 	public Req headers(Object bean) {
-		return headers(ParamsUtils.describe(bean));
+		return bean == null ? this : putAll(ParamsUtils.describe(bean), ensureHeaders());
 	}
 
 	public Req headers(Map<?, ?> map) {
-		ensureHeaders();
-		return putAll(map, headers);
+		return map == null ? this : putAll(map, ensureHeaders());
 	}
 
 
 	public Req cookies(Object... cookies) {
-		if (cookies != null) {
-			ensureCookies();
-			putAll(cookies, this.cookies);
-		}
-		return this;
+		return cookies == null ? this : putAll(cookies, ensureCookies());
+	}
+
+	public Req cookies(Params params) {
+		return params == null ? this : putAll(params, ensureCookies());
 	}
 
 	public Req cookies(Object bean) {
-		return cookies(ParamsUtils.describe(bean));
+		return bean == null ? this : putAll(ParamsUtils.describe(bean), ensureCookies());
 	}
 
 	public Req cookies(Map<?, ?> cookies) {
@@ -140,30 +148,34 @@ public class Req implements Cloneable {
 		return this;
 	}
 
+	public Req params(Params params) {
+		ensureParams();
+		putAll(params, this.params);
+		return this;
+	}
+
 	public Req params(Object bean) {
 		return params(ParamsUtils.describe(bean));
 	}
 
 	public Req params(Map<?, ?> params) {
-		ensureParams();
-		return putAll(params, this.params);
+		return putAll(params, ensureParams());
 	}
 
 	public Req datas(Object... datas) {
-		if (datas != null) {
-			ensureDatas();
-			putAll(datas, this.datas);
-		}
-		return this;
+		return datas == null ? this : putAll(datas, ensureDatas());
+	}
+
+	public Req datas(Params params) {
+		return params == null ? this : putAll(params, ensureDatas());
 	}
 
 	public Req datas(Object bean) {
-		return datas(ParamsUtils.describe(bean));
+		return bean == null ? this : datas(ParamsUtils.describe(bean), ensureDatas());
 	}
 
 	public Req datas(Map<?, ?> datas) {
-		ensureDatas();
-		return putAll(datas, this.datas);
+		return datas == null ? this : putAll(datas, ensureDatas());
 	}
 
 	public String asString() {
@@ -269,14 +281,13 @@ public class Req implements Cloneable {
 		hc.consume(build());
 	}
 
-	@Deprecated
 	public Req cookiesString(String cookiesString) {
 		this.cookieString = cookiesString;
 		return this;
 	}
 
-	public Req cookieString(String cookiesString) {
-		this.cookieString = cookiesString;
+	public Req cookieString(String cookieString) {
+		this.cookieString = cookieString;
 		return this;
 	}
 
