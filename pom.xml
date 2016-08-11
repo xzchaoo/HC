@@ -163,6 +163,14 @@
 					<execution>
 						<id>sign-artifacts</id>
 						<phase>verify</phase>
+						<!--
+												<configuration>
+													<gpgArguments>
+														<gpgArgument>no-tty</gpgArgument>
+															<gpgArgument>no-use-agent</gpgArgument>
+													</gpgArguments>
+						</configuration>
+													-->
 						<goals>
 							<goal>sign</goal>
 						</goals>
