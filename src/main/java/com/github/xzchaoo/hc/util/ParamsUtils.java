@@ -18,14 +18,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static com.github.xzchaoo.hc.util.Assert.assertTrue;
+
 /**
  * Created by xzchaoo on 2016/6/6 0006.
  */
 public class ParamsUtils {
 	public static void addParams(RequestBuilder rb, Object[] paramsPair) {
 		if (paramsPair == null || paramsPair.length == 0) return;
-		Assert.assertTrue(paramsPair.length % 2 == 0, "参数个数必须是偶数!");
-
+		assertTrue(paramsPair.length % 2 == 0, "参数个数必须是偶数!");
 		for (int i = 0; i < paramsPair.length; i += 2) {
 			String name = paramsPair[i].toString();
 			String value = paramsPair[i + 1].toString();
@@ -35,7 +36,8 @@ public class ParamsUtils {
 
 	public static void addHeaders(RequestBuilder rb, Object[] headersPair) {
 		if (headersPair == null || headersPair.length == 0) return;
-		Assert.assertTrue(headersPair.length % 2 == 0, "参数个数必须是偶数!");
+
+		assertTrue(headersPair.length % 2 == 0, "参数个数必须是偶数!");
 
 		for (int i = 0; i < headersPair.length; i += 2) {
 			String name = headersPair[i].toString();
@@ -119,7 +121,7 @@ public class ParamsUtils {
 
 	public static List<NameValuePair> toNameValuePairList(List<Object> pairList) {
 		if (pairList == null || pairList.isEmpty()) return Collections.emptyList();
-		Assert.assertTrue(pairList.size() % 2 == 0, "pairList大小必须为偶数..");
+		assertTrue(pairList.size() % 2 == 0, "pairList大小必须为偶数..");
 		List<NameValuePair> list = new ArrayList<NameValuePair>(pairList.size() / 2);
 		for (int i = 0; i < pairList.size(); i += 2) {
 			String name = pairList.get(i).toString();
@@ -141,7 +143,7 @@ public class ParamsUtils {
 
 	public static List<NameValuePair> toNameValuePairList(Object[] pairArray) {
 		if (pairArray == null || pairArray.length == 0) return Collections.emptyList();
-		Assert.assertTrue(pairArray.length % 2 == 0, "pairList大小必须为偶数..");
+		assertTrue(pairArray.length % 2 == 0, "pairList大小必须为偶数..");
 		List<NameValuePair> list = new ArrayList<NameValuePair>(pairArray.length / 2);
 		for (int i = 0; i < pairArray.length; i += 2) {
 			String name = pairArray[i].toString();

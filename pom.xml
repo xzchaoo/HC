@@ -5,7 +5,7 @@
 
 	<groupId>com.github.xzchaoo</groupId>
 	<artifactId>hc</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>HC</name>
@@ -52,9 +52,15 @@
 		<commons4.version>4.1</commons4.version>
 		<junit.version>4.12</junit.version>
 		<commons.logging.version>1.2</commons.logging.version>
+		<beanutils.version>1.9.2</beanutils.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${beanutils.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
@@ -85,11 +91,6 @@
 			<version>${httpclient.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.github.xzchaoo</groupId>
-			<artifactId>utils</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -180,5 +181,4 @@
 
 		</plugins>
 	</build>
-
 </project>
