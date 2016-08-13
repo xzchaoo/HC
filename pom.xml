@@ -5,7 +5,7 @@
 
 	<groupId>com.github.xzchaoo</groupId>
 	<artifactId>hc</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>HC</name>
@@ -45,7 +45,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
-		<fastjson.version>1.2.7</fastjson.version>
+		<fastjson.version>1.2.15</fastjson.version>
 		<lang3.version>3.4</lang3.version>
 		<httpclient.version>4.5.2</httpclient.version>
 		<slf4j.api.version>1.7.21</slf4j.api.version>
