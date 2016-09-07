@@ -14,6 +14,7 @@ import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.entity.ContentType;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
@@ -275,6 +276,15 @@ public class Req implements Cloneable {
 			}
 		}
 		return rb.build();
+	}
+
+	public <T> T resp(RespCallback<T> rc) {
+		Resp resp = asResp();
+		try {
+			return rc.process(resp);
+		} finally {
+			HttpClientUtils.closeQuietly(resp.raw());
+		}
 	}
 
 	public void consume() {

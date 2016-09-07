@@ -16,6 +16,8 @@ import org.apache.http.util.EntityUtils;
 import java.io.Closeable;
 import java.io.IOException;
 
+import static javafx.scene.input.KeyCode.T;
+
 /**
  * 对hc的简单的封装
  *
@@ -58,7 +60,6 @@ public class HC implements Closeable {
 			}
 		});
 	}
-
 	public Resp asResp(final HttpUriRequest req) {
 		return safeRun(new SafeRunner<Resp>() {
 			public Resp run() throws Exception {
