@@ -34,13 +34,12 @@ public class Req implements Cloneable {
 	private final HC hc;
 	private final RequestBuilder rb;
 	private boolean json = false;
-	private static final String DEFAULT_ENCODING = "utf-8";
-	private String encoding = DEFAULT_ENCODING;
+	private String encoding;
 	private String cookieString;
-
-	public Req(HC hc, RequestBuilder rb) {
-		this(hc, rb, DEFAULT_ENCODING);
-	}
+	private MultiValuedMap<String, String> headers;
+	private MultiValuedMap<String, String> params;
+	private MultiValuedMap<String, String> datas;
+	private MultiValuedMap<String, String> cookies;
 
 	public Req(HC hc, RequestBuilder rb, String encoding) {
 		this.hc = hc;
@@ -48,34 +47,44 @@ public class Req implements Cloneable {
 		this.encoding = encoding;
 	}
 
-	private MultiValuedMap<String, String> headers;
-	private MultiValuedMap<String, String> params;
-	private MultiValuedMap<String, String> datas;
-	private MultiValuedMap<String, String> cookies;
+	public MultiValuedMap<String, String> getHeaders() {
+		return ensureHeaders();
+	}
 
+	public MultiValuedMap<String, String> getParams() {
+		return ensureParams();
+	}
 
-	private MultiValuedMap<String, String> ensureHeaders() {
+	public MultiValuedMap<String, String> getDatas() {
+		return ensureDatas();
+	}
+
+	public MultiValuedMap<String, String> getCookies() {
+		return ensureCookies();
+	}
+
+	public MultiValuedMap<String, String> ensureHeaders() {
 		if (this.headers == null) {
 			this.headers = new ArrayListValuedHashMap<String, String>();
 		}
 		return headers;
 	}
 
-	private MultiValuedMap<String, String> ensureCookies() {
+	public MultiValuedMap<String, String> ensureCookies() {
 		if (this.cookies == null) {
 			this.cookies = new ArrayListValuedHashMap<String, String>();
 		}
 		return cookies;
 	}
 
-	private MultiValuedMap<String, String> ensureParams() {
+	public MultiValuedMap<String, String> ensureParams() {
 		if (this.params == null) {
 			this.params = new ArrayListValuedHashMap<String, String>();
 		}
 		return params;
 	}
 
-	private MultiValuedMap<String, String> ensureDatas() {
+	public MultiValuedMap<String, String> ensureDatas() {
 		if (this.datas == null) {
 			this.datas = new ArrayListValuedHashMap<String, String>();
 		}

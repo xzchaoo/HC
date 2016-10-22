@@ -16,8 +16,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.Closeable;
 import java.io.IOException;
 
-import static javafx.scene.input.KeyCode.T;
-
 /**
  * 对hc的简单的封装
  *
@@ -60,6 +58,7 @@ public class HC implements Closeable {
 			}
 		});
 	}
+
 	public Resp asResp(final HttpUriRequest req) {
 		return safeRun(new SafeRunner<Resp>() {
 			public Resp run() throws Exception {
@@ -135,6 +134,30 @@ public class HC implements Closeable {
 
 	public Req post(String url) {
 		return new Req(this, RequestBuilder.post(url), defaultEncoding);
+	}
+
+	public Req delete(String url) {
+		return new Req(this, RequestBuilder.delete(url), defaultEncoding);
+	}
+
+	public Req put(String url) {
+		return new Req(this, RequestBuilder.put(url), defaultEncoding);
+	}
+
+	public Req head(String url) {
+		return new Req(this, RequestBuilder.head(url), defaultEncoding);
+	}
+
+	public Req options(String url) {
+		return new Req(this, RequestBuilder.options(url), defaultEncoding);
+	}
+
+	public Req patch(String url) {
+		return new Req(this, RequestBuilder.patch(url), defaultEncoding);
+	}
+
+	public Req trace(String url) {
+		return new Req(this, RequestBuilder.trace(url), defaultEncoding);
 	}
 
 	public String getDefaultEncoding() {

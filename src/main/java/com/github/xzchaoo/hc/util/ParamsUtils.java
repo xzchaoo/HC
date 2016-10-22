@@ -24,7 +24,7 @@ import static com.github.xzchaoo.hc.util.Assert.assertTrue;
  * Created by xzchaoo on 2016/6/6 0006.
  */
 public class ParamsUtils {
-	public static void addParams(RequestBuilder rb, Object[] paramsPair) {
+	public static void addParams(RequestBuilder rb, Object... paramsPair) {
 		if (paramsPair == null || paramsPair.length == 0) return;
 		assertTrue(paramsPair.length % 2 == 0, "参数个数必须是偶数!");
 		for (int i = 0; i < paramsPair.length; i += 2) {
@@ -34,11 +34,9 @@ public class ParamsUtils {
 		}
 	}
 
-	public static void addHeaders(RequestBuilder rb, Object[] headersPair) {
+	public static void addHeaders(RequestBuilder rb, Object... headersPair) {
 		if (headersPair == null || headersPair.length == 0) return;
-
 		assertTrue(headersPair.length % 2 == 0, "参数个数必须是偶数!");
-
 		for (int i = 0; i < headersPair.length; i += 2) {
 			String name = headersPair[i].toString();
 			String value = headersPair[i + 1].toString();

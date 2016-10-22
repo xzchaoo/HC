@@ -5,7 +5,7 @@
 
 	<groupId>com.github.xzchaoo</groupId>
 	<artifactId>hc</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>HC</name>
@@ -44,6 +44,7 @@
 	</distributionManagement>
 
 	<properties>
+		<java.version>1.5</java.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<fastjson.version>1.2.16</fastjson.version>
 		<lang3.version>3.4</lang3.version>
@@ -119,7 +120,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>2.2.1</version>
+				<version>3.0.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -132,7 +133,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>
+				<version>2.10.4</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -141,6 +142,16 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<target>${java.version}</target>
+					<source>${java.version}</source>
+				</configuration>
 			</plugin>
 
 
@@ -159,19 +170,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.5</version>
+				<version>1.6</version>
 				<executions>
 					<execution>
 						<id>sign-artifacts</id>
 						<phase>verify</phase>
-						<!--
-												<configuration>
-													<gpgArguments>
-														<gpgArgument>no-tty</gpgArgument>
-															<gpgArgument>no-use-agent</gpgArgument>
-													</gpgArguments>
-						</configuration>
-													-->
 						<goals>
 							<goal>sign</goal>
 						</goals>
