@@ -315,4 +315,8 @@ public class Req implements Cloneable {
 		this.encoding = encoding;
 		return this;
 	}
+
+	public Req visit(ReqVisitor visitor) {
+		return visitor.visit(this);
+	}
 }
