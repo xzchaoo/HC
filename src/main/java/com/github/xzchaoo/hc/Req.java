@@ -317,6 +317,13 @@ public class Req implements Cloneable {
 	}
 
 	public Req visit(ReqVisitor visitor) {
-		return visitor.visit(this);
+		if (visitor != null) {
+			return visitor.visit(this);
+		}
+		return this;
+	}
+
+	public RequestBuilder getRequestBuilder() {
+		return rb;
 	}
 }

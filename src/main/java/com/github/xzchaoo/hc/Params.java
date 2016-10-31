@@ -123,4 +123,8 @@ public class Params {
 		}
 		return map;
 	}
+
+	public MultiValuedMap<String, String> getMultiValuedMap() {
+		return map;
+	}
 }
