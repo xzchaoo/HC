@@ -5,7 +5,7 @@
 
 	<groupId>com.github.xzchaoo</groupId>
 	<artifactId>hc</artifactId>
-	<version>1.0.3-SNAPSHOT</version>
+	<version>1.0.3</version>
 	<packaging>jar</packaging>
 
 	<name>HC</name>
@@ -174,7 +174,7 @@
 				<executions>
 					<execution>
 						<id>sign-artifacts</id>
-						<phase>verify</phase>
+						<phasKe>verify</phasKe>
 						<goals>
 							<goal>sign</goal>
 						</goals>
@@ -184,4 +184,5 @@
 
 		</plugins>
 	</build>
+
 </project>
