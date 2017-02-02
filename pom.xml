@@ -3,9 +3,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.xzchaoo</groupId>
+	<groupId>com.xzchaoo</groupId>
 	<artifactId>hc</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<packaging>jar</packaging>
 
 	<name>HC</name>
@@ -47,37 +47,16 @@
 		<java.version>1.5</java.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<fastjson.version>1.2.16</fastjson.version>
-		<lang3.version>3.4</lang3.version>
 		<httpclient.version>4.5.2</httpclient.version>
 		<slf4j.api.version>1.7.21</slf4j.api.version>
-		<commons4.version>4.1</commons4.version>
 		<junit.version>4.12</junit.version>
-		<commons.logging.version>1.2</commons.logging.version>
-		<beanutils.version>1.9.2</beanutils.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-			<version>${beanutils.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${lang3.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>${commons.logging.version}</version>
 		</dependency>
 
 		<dependency>
@@ -97,13 +76,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.api.version}</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-			<version>${commons4.version}</version>
 		</dependency>
 
 		<dependency>
@@ -174,7 +146,7 @@
 				<executions>
 					<execution>
 						<id>sign-artifacts</id>
-						<phasKe>verify</phasKe>
+						<phase>verify</phase>
 						<goals>
 							<goal>sign</goal>
 						</goals>

@@ -1,12 +1,10 @@
-import com.github.xzchaoo.hc.HC;
-import com.github.xzchaoo.hc.util.HCs;
-import com.github.xzchaoo.hc.util.ProxyUtil;
-import com.github.xzchaoo.hc.util.ProxyUtil.ProxyInfo;
+package com.xzchaoo.hc.test;
 
-import org.apache.commons.beanutils.BeanUtils;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.alibaba.fastjson.JSONObject;
+import com.xzchaoo.hc.HC;
+import com.xzchaoo.hc.util.HCs;
+import com.xzchaoo.hc.util.ProxyUtil;
+import com.xzchaoo.hc.util.ProxyUtil.ProxyInfo;
 
 public class Main {
 	public static void main(String[] args) {
@@ -25,15 +23,10 @@ public class Main {
 		System.out.println(pi.username + " " + pi.password + " " + pi.host + " " + pi.port);
 
 		HC hc = HCs.makeHC();
-		String s = hc.get("http://www.baidu.com").asString();
+		String s = hc.get("http://www.baidu.com").execute().asString();
 		System.out.println(s);
 
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("username", "zs");
-		try {
-			System.out.println(BeanUtils.describe(map));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		JSONObject r = hc.get("http://api.bilibili.com/x/video?aid=1").execute().asJson();
+		System.out.println(r);
 	}
 }

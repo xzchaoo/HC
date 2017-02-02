@@ -1,13 +1,17 @@
-package com.github.xzchaoo.hc;
+package com.xzchaoo.hc;
 
-import com.github.xzchaoo.hc.util.HCs;
+import com.alibaba.fastjson.JSONObject;
+import com.xzchaoo.hc.util.HCs;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.URIBuilder;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -22,23 +26,25 @@ public class HCTest {
 		HC hc = HCs.makeHC();
 		assertNotNull(hc.getCHC());
 		assertNotNull(hc.getRequestConfig());
-		assertNotNull(hc.getDefaultEncoding());
+		assertNotNull(hc.getDefaultCharset());
 		hc.close();
 	}
 
 	@Test
 	public void testAll() throws UnsupportedEncodingException {
-		HC hc = HCs.makeHC();
-		HttpUriRequest hur = hc.post("http://www.example.com")
-			.encoding("utf-8")
-			.headers("a", "ha", "b", "hb")
-			.params("c", "pc", "d", "pd", "dd", "中文")
-			.datas("e", "de", "f", "df")
-			.cookies("g", "cg", "h", "ch")
+		//HC hc = HCs.makeHC();
+		HttpUriRequest hur = RequestBuilder.post("http://www.example.com")
+			.addHeader("a", "ha")
+			.addHeader("b", "hb")
+			.addParameter("c", "pc")
+			.addParameter("d", "pd")
+			.addParameter("dd", "中文")
+			.setEntity(new UrlEncodedFormEntity(Collections.<NameValuePair>emptyList()))
+			.addHeader("Cookie", "g=cg;h=ch;")
+			//.datas("e", "de", "f", "df")
 			.build();
 
 		assertEquals(hur.getMethod(), "POST");
-
 		List<NameValuePair> queryParams = new URIBuilder(hur.getURI()).getQueryParams();
 		assertNotNull(queryParams);
 		assertEquals(queryParams.size(), 3);

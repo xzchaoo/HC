@@ -1,6 +1,6 @@
-package com.github.xzchaoo.hc.util;
+package com.xzchaoo.hc.util;
 
-import com.github.xzchaoo.hc.HC;
+import com.xzchaoo.hc.HC;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
