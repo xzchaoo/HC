@@ -29,6 +29,7 @@ public class Resp {
 	}
 
 	Resp(HttpUriRequest hur, CloseableHttpResponse resp, Charset defaultCharset) {
+		this.hur = hur;
 		this.resp = resp;
 		this.defaultCharset = defaultCharset;
 		HttpEntity he = resp.getEntity();
@@ -117,5 +118,9 @@ public class Resp {
 	public String getFirstHeaderValue(String name) {
 		Header header = resp.getFirstHeader(name);
 		return header == null ? null : header.getValue();
+	}
+
+	public HttpUriRequest request() {
+		return hur;
 	}
 }
