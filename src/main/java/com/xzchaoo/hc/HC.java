@@ -3,9 +3,7 @@ package com.xzchaoo.hc;
 import com.xzchaoo.hc.util.Assert;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.Configurable;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -18,7 +16,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
-import java.util.Collections;
 
 /**
  * 对hc的简单的封装
@@ -26,13 +23,12 @@ import java.util.Collections;
  * @author xzchaoo
  */
 public class HC implements Closeable {
-	public static final HttpEntity EMPTY_ENTITY = new UrlEncodedFormEntity(Collections.<NameValuePair>emptyList(), Charset.forName("UTF-8"));
-	private static final Charset UTF8 = Charset.forName("utf-8");
-	private Charset defaultCharset = UTF8;
+	public static final HttpEntity EMPTY_ENTITY = CommonEntity.EMPTY_URL_ENCODED_FORM_ENTITY;
+	private Charset defaultCharset = CharsetUtils.UTF8;
 	private CloseableHttpClient chc;
 
 	public HC(CloseableHttpClient chc) {
-		this(chc, UTF8);
+		this(chc, CharsetUtils.UTF8);
 	}
 
 	public HC(CloseableHttpClient chc, Charset defaultCharset) {
@@ -105,11 +101,11 @@ public class HC implements Closeable {
 	}
 
 	public ReqBuilder post(String url) {
-		return new ReqBuilder(this, RequestBuilder.post(url));
+		return new ReqBuilder(this, RequestBuilder.post(url)).entity(EMPTY_ENTITY);
 	}
 
 	public ReqBuilder post(URI url) {
-		return new ReqBuilder(this, RequestBuilder.post(url));
+		return new ReqBuilder(this, RequestBuilder.post(url)).entity(EMPTY_ENTITY);
 	}
 
 	public ReqBuilder put() {

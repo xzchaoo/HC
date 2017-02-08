@@ -51,8 +51,19 @@ public class Resp {
 		return JSON.parseObject(asString(defaultCharset));
 	}
 
-	public <T> T asJso(Class<T> clazz) {
+	public <T> T asPojo(Class<T> clazz) {
 		return JSON.parseObject(asString(defaultCharset), clazz);
+	}
+
+	/**
+	 * @deprecated typo. Please use asPojo instead. This method will be removed in future
+	 * @param clazz
+	 * @param <T>
+	 * @return
+	 */
+	@Deprecated
+	public <T> T asJso(Class<T> clazz) {
+		return asPojo(clazz);
 	}
 
 	public CloseableHttpResponse raw() {

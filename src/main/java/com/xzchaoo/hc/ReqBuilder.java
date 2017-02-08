@@ -11,8 +11,8 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,16 +88,20 @@ public class ReqBuilder {
 	}
 
 	public ReqBuilder form(Params params) {
-		return form(params.getList());
+		return form(params.getList(), hc.getDefaultCharset());
+	}
+
+	public ReqBuilder form(Params params, Charset charset) {
+		return form(params.getList(), charset);
 	}
 
 	public ReqBuilder form(List<NameValuePair> list) {
-		try {
-			UrlEncodedFormEntity e = new UrlEncodedFormEntity(list);
-			rb.setEntity(e);
-		} catch (UnsupportedEncodingException e1) {
-			throw new RuntimeException(e1);
-		}
+		return form(list, hc.getDefaultCharset());
+	}
+
+	public ReqBuilder form(List<NameValuePair> list, Charset charset) {
+		UrlEncodedFormEntity e = new UrlEncodedFormEntity(list, charset);
+		rb.setEntity(e);
 		return this;
 	}
 
@@ -125,6 +129,7 @@ public class ReqBuilder {
 		rb.addHeader("Cookie", cookie);
 		return this;
 	}
+
 	@Deprecated
 	public ReqBuilder cookieString(String cookie) {
 		rb.addHeader("Cookie", cookie);
@@ -168,6 +173,10 @@ public class ReqBuilder {
 		return execute().asString();
 	}
 
+	public String asString(Charset charset) {
+		return execute().asString(charset);
+	}
+
 	@Deprecated
 	public JSONObject asJSON() {
 		return execute().asJson();
@@ -175,5 +184,9 @@ public class ReqBuilder {
 
 	public JSONObject asJson() {
 		return execute().asJson();
+	}
+
+	public <T> T asPojo(Class<T> clazz) {
+		return execute().asPojo(clazz);
 	}
 }

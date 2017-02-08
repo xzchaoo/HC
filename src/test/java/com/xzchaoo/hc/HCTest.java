@@ -1,10 +1,12 @@
 package com.xzchaoo.hc;
 
-import com.alibaba.fastjson.JSONObject;
 import com.xzchaoo.hc.util.HCs;
 
+import org.apache.http.Header;
+import org.apache.http.HeaderElement;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.URIBuilder;
@@ -27,6 +29,14 @@ public class HCTest {
 		assertNotNull(hc.getCHC());
 		assertNotNull(hc.getRequestConfig());
 		assertNotNull(hc.getDefaultCharset());
+		Resp resp = hc.get("https://passport.bilibili.com/login").execute();
+		CloseableHttpResponse resp0 = resp.raw();
+		for (Header h : resp0.getHeaders("Set-Cookie")) {
+			for (HeaderElement he : h.getElements()) {
+				System.out.println(he.getName() + " " + he.getValue());
+				System.out.println(he.getParameterCount());
+			}
+		}
 		hc.close();
 	}
 
