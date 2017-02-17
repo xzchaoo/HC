@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 import java.io.Closeable;
@@ -50,9 +51,13 @@ public class HC implements Closeable {
 	}
 
 	public Resp execute(HttpUriRequest hur) {
+		return execute(hur, null);
+	}
+
+	public Resp execute(HttpUriRequest hur, HttpContext ctx) {
 		CloseableHttpResponse chr = null;
 		try {
-			chr = chc.execute(hur);
+			chr = chc.execute(hur, ctx);
 			return new Resp(hur, chr);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
