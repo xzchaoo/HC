@@ -5,11 +5,16 @@ import com.xzchaoo.hc.util.HCs;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -76,6 +81,27 @@ public class HCTest {
 
 		assertNotNull(hur.getFirstHeader("Cookie"));
 		assertEquals(hur.getFirstHeader("Cookie").getValue(), "g=cg;h=ch;");
+	}
 
+	@Test
+	public void testCookie() {
+		HC hc = HCs.makeHC();
+		BasicCookieStore bcs = new BasicCookieStore();
+		HttpClientContext hcc = new HttpClientContext();
+		hcc.setCookieStore(bcs);
+		HttpUriRequest hur = RequestBuilder
+			.get("https://account.bilibili.com/ajax/miniLogin/minilogin")
+			.setConfig(
+				RequestConfig.copy(hc.getRequestConfig())
+					.setCookieSpec(CookieSpecs.DEFAULT)
+					.build()
+			)
+			.build();
+		Resp resp = hc.execute(hur, hcc);
+		System.out.println(resp.getFirstHeaderValue("Set-Cookie"));
+		List<Cookie> cookies = bcs.getCookies();
+		for (Cookie c : cookies) {
+			System.out.println(c);
+		}
 	}
 }
