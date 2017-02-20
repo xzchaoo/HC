@@ -5,7 +5,7 @@
 
 	<groupId>com.xzchaoo</groupId>
 	<artifactId>hc</artifactId>
-	<version>1.0.9</version>
+	<version>1.0.10-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>HC</name>
@@ -96,6 +96,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -108,6 +115,19 @@
 					<target>${java.version}</target>
 					<source>${java.version}</source>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -144,19 +164,6 @@
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<version>3.0.1</version>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar-no-fork</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>2.10.4</version>
 						<executions>
@@ -172,5 +179,6 @@
 			</build>
 		</profile>
 	</profiles>
+
 
 </project>
