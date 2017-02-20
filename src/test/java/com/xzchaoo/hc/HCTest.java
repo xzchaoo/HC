@@ -4,6 +4,7 @@ import com.xzchaoo.hc.util.HCs;
 
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
+import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
@@ -15,11 +16,17 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -87,21 +94,45 @@ public class HCTest {
 	public void testCookie() {
 		HC hc = HCs.makeHC();
 		BasicCookieStore bcs = new BasicCookieStore();
-		HttpClientContext hcc = new HttpClientContext();
+		HttpClientContext hcc = HttpClientContext.create();
 		hcc.setCookieStore(bcs);
-		HttpUriRequest hur = RequestBuilder
-			.get("https://account.bilibili.com/ajax/miniLogin/minilogin")
-			.setConfig(
-				RequestConfig.copy(hc.getRequestConfig())
-					.setCookieSpec(CookieSpecs.DEFAULT)
-					.build()
-			)
-			.build();
-		Resp resp = hc.execute(hur, hcc);
-		System.out.println(resp.getFirstHeaderValue("Set-Cookie"));
+		Resp resp = hc.get("https://account.bilibili.com/ajax/miniLogin/minilogin")
+			.config(RequestConfig.copy(hc.getRequestConfig())
+				.setCookieSpec(CookieSpecs.DEFAULT)
+				.build())
+			.execute(hcc);
 		List<Cookie> cookies = bcs.getCookies();
 		for (Cookie c : cookies) {
 			System.out.println(c);
+		}
+	}
+
+	public void ceshi() throws IOException, InterruptedException {
+		HC hc = HCs.makeHC();
+		final CloseableHttpClient chc = hc.getCHC();
+		ExecutorService es = Executors.newFixedThreadPool(16);
+		for (int i = 0; i < 1; ++i) {
+			es.submit(new Runnable() {
+				public void run() {
+					try {
+						CloseableHttpResponse resp = chc.execute(
+							RequestBuilder.get("http://api.bilibili.com/x/video?aid=1").build()
+						);
+						HttpEntity he = resp.getEntity();
+						Thread.sleep(1000);
+						//EntityUtils.consume(he);
+						resp.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+		es.shutdown();
+		es.awaitTermination(1, TimeUnit.MINUTES);
+		System.out.println("我在这里");
+		for (int i = 0; i < 100; ++i) {
+			Thread.sleep(1000);
 		}
 	}
 }

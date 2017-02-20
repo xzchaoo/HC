@@ -32,6 +32,28 @@ public class Params {
 		return this;
 	}
 
+	public Params add(Params p) {
+		return add(p.getList());
+	}
+
+	public Params add(List<NameValuePair> nvps) {
+		list.addAll(nvps);
+		return this;
+	}
+
+	public Params add(Object... args){
+		if (args == null || args.length == 0) {
+			return this;
+		}
+		if (args.length % 2 == 1) {
+			throw new IllegalArgumentException();
+		}
+		for (int i = 0; i < args.length; i += 2) {
+			list.add(new BasicNameValuePair((String) args[i], args[i + 1].toString()));
+		}
+		return this;
+	}
+
 	public List<NameValuePair> getList() {
 		return list;
 	}

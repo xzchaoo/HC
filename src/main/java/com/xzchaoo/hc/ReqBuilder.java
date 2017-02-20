@@ -10,6 +10,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HttpContext;
 
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -146,6 +147,10 @@ public class ReqBuilder {
 
 	public Resp execute() {
 		return hc.execute(build());
+	}
+
+	public Resp execute(HttpContext ctx) {
+		return hc.execute(build(), ctx);
 	}
 
 	public void consume() {
